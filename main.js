@@ -1,35 +1,43 @@
-const {app, BrowserWindow} = require('electron')
+const { app, BrowserWindow } = require('electron')
+
+let win;
+
+function createWindow () {
+  // Create the browser window.
+  win = new BrowserWindow({
+    width: 1000, 
+    height: 600,
+    backgroundColor: '#ffffff',
+    icon: `file://${__dirname}/dist/time-tracker/assets/logo.png`
+  })
 
 
-let win = null;
+  win.loadURL(`file://${__dirname}/dist/time-tracker/index.html`)
 
-app.on('ready', function () {
+  //// uncomment below to open the DevTools.
+  // win.webContents.openDevTools()
 
-  // Initialize the window to our specified dimensions
-  win = new BrowserWindow({width: 1000, height: 600});
-
-  // Specify entry point
-  win.loadURL('http://localhost:4000');
-
-  // Show dev tools
-  // Remove this line before distributing
-  win.webContents.openDevTools()
-
-  // Remove window once app is closed
+  // Event when the window is closed.
   win.on('closed', function () {
-    win = null;
-  });
+    win = null
+  })
+}
 
-});
+// Create window on electron intialization
+app.on('ready', createWindow)
 
-app.on('activate', () => {
+// Quit when all windows are closed.
+app.on('window-all-closed', function () {
+
+  // On macOS specific close process
+  if (process.platform !== 'darwin') {
+    app.quit()
+  }
+})
+
+app.on('activate', function () {
+  // macOS specific close process
   if (win === null) {
     createWindow()
   }
 })
-
-app.on('window-all-closed', function () {
-  if (process.platform != 'darwin') {
-    app.quit();
-  }
-});
