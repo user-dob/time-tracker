@@ -4,19 +4,19 @@
             <mat-spinner></mat-spinner>
         </div>
         <div [hidden]="isLoading">
-            <form class="form" (ngSubmit)="onSubmit()">
+            <form [formGroup]="form" (ngSubmit)="onSubmit()" class="form">
 
                 <mat-form-field class="form-field">
                     <span matPrefix>https://&nbsp;</span>
-                    <input type="text" matInput placeholder="Jira domain" [(ngModel)]="domain" name="domain" required>
+                    <input type="text" matInput placeholder="Jira domain" name="domain" formControlName="domain">
                 </mat-form-field>
             
                 <mat-form-field class="form-field">
-                    <input type="text" matInput placeholder="Username" [(ngModel)]="username" name="username" required>
+                    <input type="text" matInput placeholder="Username" name="username" formControlName="username">
                 </mat-form-field>
             
                 <mat-form-field class="form-field">
-                    <input type="password" matInput placeholder="Password" [(ngModel)]="password" name="password" required>
+                    <input type="password" matInput placeholder="Password" name="password" formControlName="password">
                 </mat-form-field>
         
                 <div class="form-button-row">

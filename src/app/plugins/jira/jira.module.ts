@@ -1,8 +1,9 @@
 import { NgModule } from '@angular/core';
 import { HttpClientModule } from '@angular/common/http';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatFormFieldModule, MatInputModule, MatButtonModule, MatProgressSpinnerModule } from '@angular/material';
 
+import { CoreModule } from '@app/core/core.module';
 import { JiraRoutingModule } from '@plugins/jira/jira-routing.module';
 import { JiraService } from "@plugins/jira/jira.service";
 import { JiraLoginComponent } from '@plugins/jira/jira-login/jira-login.component';
@@ -10,8 +11,10 @@ import { JiraSettingsComponent } from '@plugins/jira/jira-settings/jira-settings
 
 @NgModule({
     imports: [
+        CoreModule,
         HttpClientModule,
         FormsModule,
+        ReactiveFormsModule,
         JiraRoutingModule,
         MatFormFieldModule,
         MatInputModule,
