@@ -1,0 +1,29 @@
+<div class="jira-login">
+    <div class="jira-login-form">
+        <div [hidden]="!isLoading">
+            <mat-spinner></mat-spinner>
+        </div>
+        <div [hidden]="isLoading">
+            <form class="form" (ngSubmit)="onSubmit()">
+
+                <mat-form-field class="form-field">
+                    <span matPrefix>https://&nbsp;</span>
+                    <input type="text" matInput placeholder="Jira domain" [(ngModel)]="domain" name="domain" required>
+                </mat-form-field>
+            
+                <mat-form-field class="form-field">
+                    <input type="text" matInput placeholder="Username" [(ngModel)]="username" name="username" required>
+                </mat-form-field>
+            
+                <mat-form-field class="form-field">
+                    <input type="password" matInput placeholder="Password" [(ngModel)]="password" name="password" required>
+                </mat-form-field>
+        
+                <div class="form-button-row">
+                    <button class="w100" mat-raised-button type="submit">Login</button>
+                </div>        
+                
+            </form>
+        </div>
+    </div>
+</div>
