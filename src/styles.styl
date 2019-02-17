@@ -19,13 +19,25 @@ html, body
     color: white;
 
 .page-loading
-    height: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0px;
+    right: 0;
+    background: rgba(0, 0, 0, 0.15);
+    z-index: 1;
     display: flex;
     align-items: center;
     justify-content: center;
-    min-height: 300px; 
+
+.page-reached
+    color: #980000;
+    max-width: 360px;
+    text-align: center;
 
 .page
+    position: relative;
+    min-height: 200px;
     padding: 10px;
 
     &-head 
@@ -45,13 +57,19 @@ html, body
                 flex-direction: column;
             .radio-button
                 margin: 5px;    
-            .mat-card
+            &-item
+                padding: 10px;
                 margin-bottom: 10px;
 
         &__content
-            width: 100%   
+            width: 100%;   
+            padding: 10px;
 
+table 
+    width: 100%;
 
+.mat-form-field
+    width: 100%;
 
 
          

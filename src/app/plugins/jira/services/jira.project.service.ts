@@ -34,7 +34,7 @@ export class JiraProjectService {
 
     async getProjects() {
         const connector = await this.jiraLoginService.getConnector();
-        const projects = await connector.getProjects();
+        return <IJiraProject[]>await connector.getProjects();
     }
 
     async getTypes() {

@@ -1,6 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { MatPaginator, MatSort, MatTableDataSource } from '@angular/material';
 import { LoggerService, NotificationService } from '@app/core/services';
-import { JiraProjectService, IJiraProjectType, IJiraProjectCategory } from '../services';
+import { JiraProjectService, IJiraProjectType, IJiraProjectCategory, IJiraProject } from '../services';
 
 @Component({
     selector: 'app-jira-projects',
@@ -10,6 +11,14 @@ import { JiraProjectService, IJiraProjectType, IJiraProjectCategory } from '../s
 export class JiraProjectsComponent implements OnInit {
 
     isLoading: boolean = false;
+
+    displayedColumns: string[] = ['name', 'key'];
+
+    dataSource: MatTableDataSource<IJiraProject> = new MatTableDataSource();
+
+    @ViewChild(MatPaginator) paginator: MatPaginator;
+
+    @ViewChild(MatSort) sort: MatSort;
 
     types: IJiraProjectType[];
 
@@ -26,22 +35,34 @@ export class JiraProjectsComponent implements OnInit {
     ) { }
 
     async ngOnInit() {
-        this.isLoading = true;
+        this.dataSource.paginator = this.paginator;
+        this.dataSource.sort = this.sort;
 
         try {
-            const [types, categories] = await Promise.all([
+            this.isLoading = true;
+
+            const [types, categories, projects] = await Promise.all([
                 this.jiraProjectService.getTypes(),
-                this.jiraProjectService.getCategories()
+                this.jiraProjectService.getCategories(),
+                this.jiraProjectService.getProjects()
             ]);
 
             this.types = types;
             this.categories = categories;
+            this.dataSource.data = projects;
 
         } catch (error) {
             this.notificationService.showError(error.message);
             this.loggerService.logError(error);
         } finally {
             this.isLoading = false;
+        }
+    }
+
+    onSearch(value: string) {
+        this.dataSource.filter = value.trim().toLowerCase();
+        if (this.dataSource.paginator) {
+            this.dataSource.paginator.firstPage();
         }
     }
 }
