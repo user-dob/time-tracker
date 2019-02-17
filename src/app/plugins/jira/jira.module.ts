@@ -4,10 +4,12 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatFormFieldModule, MatInputModule, MatButtonModule, MatProgressSpinnerModule } from '@angular/material';
 
 import { CoreModule } from '@app/core/core.module';
-import { JiraRoutingModule } from '@plugins/jira/jira-routing.module';
-import { JiraService } from "@plugins/jira/jira.service";
-import { JiraLoginComponent } from '@plugins/jira/jira-login/jira-login.component';
-import { JiraSettingsComponent } from '@plugins/jira/jira-settings/jira-settings.component';
+import { JiraRoutingModule } from './jira-routing.module';
+import { JiraModel } from "./jira.model";
+import { JiraConnectorService, JiraKeytarService } from "./services";
+import { JiraGuard } from "./jira.guard";
+import { JiraLoginComponent } from './jira-login/jira-login.component';
+import { JiraSettingsComponent } from './jira-settings/jira-settings.component';
 
 @NgModule({
     imports: [
@@ -22,7 +24,10 @@ import { JiraSettingsComponent } from '@plugins/jira/jira-settings/jira-settings
         MatProgressSpinnerModule
     ],
     providers: [
-        JiraService
+        JiraModel,
+        JiraConnectorService,
+        JiraKeytarService,
+        JiraGuard
     ],
     declarations: [
         JiraLoginComponent,
