@@ -1,16 +1,19 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { MatSnackBarModule } from '@angular/material';
+import { MaterialModule } from '../material.module';
 import { WebStorageModule } from 'ngx-store';
 
-import { LoggerService } from './services/logger.service';
-import { NotificationService } from './services/notification.service';
+import { LoggerService, NotificationService } from './services';
 
 @NgModule({
     imports: [
         CommonModule,
-        MatSnackBarModule,
+        MaterialModule,
         WebStorageModule
+    ],
+    exports: [
+        CommonModule,
+        MaterialModule
     ],
     providers: [
         LoggerService,

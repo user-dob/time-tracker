@@ -1,4 +1,4 @@
-import { KeytarService } from '@app/core/services/keytar.service';
+import { KeytarService } from '@app/core/services';
 
 export class JiraKeytarService extends KeytarService {
 

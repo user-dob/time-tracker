@@ -10,16 +10,16 @@ export class JiraConnectorService {
 
     private password: string;
 
+    constructor(
+        private http: HttpClient
+    ) {}
+
     private get headers() {
         return new HttpHeaders({
             'Content-type': 'application/json',
             'Authorization': 'Basic ' + window.btoa(`${this.username}:${this.password}`)
         });
     }
-
-    constructor(
-        private http: HttpClient
-    ) {}    
 
     setDomain(domain: string) {
         this.domain = domain;
@@ -30,6 +30,12 @@ export class JiraConnectorService {
         this.password = password;
     }
 
+    logout() {
+        this.domain = undefined;
+        this.username = undefined;
+        this.password = undefined;
+    }
+
     async getUser(username: string) {
         return this.api(`user`, {username});
     }
@@ -38,12 +44,19 @@ export class JiraConnectorService {
         return this.api(`issue/${issueIdOrKey}`);
     }
 
-    async getAllProjects() {
+    async getProjects() {
         return this.api(`project`);
+    }
+
+    async getProjectsCategories() {
+        return this.api(`projectCategory`);
+    }
+
+    async getProjectsTypes() {
+        return this.api(`project/type`);
     }
 
     async api(endPoint: string, params?: {[param: string]: string}) {
         return this.http.get(`https://${this.domain}/rest/api/2/${endPoint}`, {headers: this.headers, params}).toPromise();
     }
-    
 }

@@ -3,7 +3,7 @@ import { Routes, RouterModule, PreloadAllModules } from '@angular/router';
 
 const routes: Routes = [
     { path: 'jira', loadChildren: '@plugins/jira/jira.module#JiraModule' },
-    { path: '', redirectTo: '/jira/login', pathMatch: 'full' }
+    { path: '', redirectTo: '/jira/settings', pathMatch: 'full' }
 ];
 
 @NgModule({

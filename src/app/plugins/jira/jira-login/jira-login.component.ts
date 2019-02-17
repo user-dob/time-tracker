@@ -2,9 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 
-import { LoggerService } from '@app/core/services/logger.service';
-import { NotificationService } from '@app/core/services/notification.service';
-import { JiraModel } from '@plugins/jira/jira.model';
+import { LoggerService, NotificationService } from '@app/core/services';
+import { JiraLoginService } from '../services';
 
 @Component({
     selector: 'app-jira-login',
@@ -22,7 +21,7 @@ export class JiraLoginComponent implements OnInit {
         private router: Router,
         private loggerService: LoggerService,
         private notificationService: NotificationService,
-        private jiraModel: JiraModel
+        private jiraLoginService: JiraLoginService
     ) {}
 
     ngOnInit() {
@@ -31,8 +30,8 @@ export class JiraLoginComponent implements OnInit {
 
     buildForm() {
         this.form = this.formBulider.group({
-            domain: [this.jiraModel.domain, Validators.required],
-            username: [this.jiraModel.username, Validators.required],
+            domain: [this.jiraLoginService.domain, Validators.required],
+            username: [this.jiraLoginService.username, Validators.required],
             password: ['', Validators.required]
         }); 
     }
@@ -42,7 +41,7 @@ export class JiraLoginComponent implements OnInit {
             this.isLoading = true;
 
             try {
-                await this.jiraModel.login(this.form.value);
+                await this.jiraLoginService.login(this.form.value);
                 this.router.navigate(['/jira/settings']);
             } catch (error) {
                 this.notificationService.showError(error.message);

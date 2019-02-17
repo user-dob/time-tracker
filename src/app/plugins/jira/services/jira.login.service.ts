@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { LocalStorage } from 'ngx-store';
-import { JiraConnectorService, JiraKeytarService } from './services';
+import { JiraConnectorService } from './jira.connector.service';
+import { JiraKeytarService } from './jira.keytar.service';
 
 export interface IJiraUser {
     displayName: string,
@@ -9,7 +10,7 @@ export interface IJiraUser {
 }
 
 @Injectable()
-export class JiraModel {
+export class JiraLoginService {
 
     constructor(
         private jiraConnectorService: JiraConnectorService,
@@ -67,7 +68,8 @@ export class JiraModel {
         this.password = '';
         this.user = null;
 
-        await await this.jiraKeytarService.deletePassword(this.username);
-    }
+        this.jiraConnectorService.logout();
 
+        await this.jiraKeytarService.deletePassword(this.username);
+    }
 }

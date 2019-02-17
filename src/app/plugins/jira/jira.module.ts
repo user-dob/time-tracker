@@ -1,15 +1,14 @@
 import { NgModule } from '@angular/core';
 import { HttpClientModule } from '@angular/common/http';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { MatFormFieldModule, MatInputModule, MatButtonModule, MatProgressSpinnerModule } from '@angular/material';
 
 import { CoreModule } from '@app/core/core.module';
 import { JiraRoutingModule } from './jira-routing.module';
-import { JiraModel } from "./jira.model";
-import { JiraConnectorService, JiraKeytarService } from "./services";
+import { JiraConnectorService, JiraKeytarService, JiraLoginService, JiraProjectService } from "./services";
 import { JiraGuard } from "./jira.guard";
 import { JiraLoginComponent } from './jira-login/jira-login.component';
 import { JiraSettingsComponent } from './jira-settings/jira-settings.component';
+import { JiraProjectsComponent } from './jira-projects/jira-projects.component';
 
 @NgModule({
     imports: [
@@ -17,21 +16,19 @@ import { JiraSettingsComponent } from './jira-settings/jira-settings.component';
         HttpClientModule,
         FormsModule,
         ReactiveFormsModule,
-        JiraRoutingModule,
-        MatFormFieldModule,
-        MatInputModule,
-        MatButtonModule,
-        MatProgressSpinnerModule
+        JiraRoutingModule
     ],
     providers: [
-        JiraModel,
+        JiraLoginService,
         JiraConnectorService,
         JiraKeytarService,
+        JiraProjectService,
         JiraGuard
     ],
     declarations: [
         JiraLoginComponent,
-        JiraSettingsComponent
+        JiraSettingsComponent,
+        JiraProjectsComponent
     ]
 })
 export class JiraModule {}
