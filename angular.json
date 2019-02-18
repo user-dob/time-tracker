@@ -15,8 +15,12 @@
       },
       "architect": {
         "build": {
-          "builder": "@angular-devkit/build-angular:browser",
+          "builder": "@angular-builders/custom-webpack:browser",
           "options": {
+            "customWebpackConfig": {
+              "path": "./extra-webpack.config.js",
+              "replaceDuplicatePlugins": true
+            },  
             "outputPath": "dist/time-tracker",
             "index": "src/index.html",
             "main": "src/main.ts",
@@ -60,9 +64,15 @@
           }
         },
         "serve": {
-          "builder": "@angular-devkit/build-angular:dev-server",
+          "builder": "@angular-builders/custom-webpack:server",
           "options": {
-            "browserTarget": "time-tracker:build"
+            "customWebpackConfig": {
+                "path": "./extra-webpack.config.js",
+                "replaceDuplicatePlugins": true
+            },  
+            "outputPath": "dist/time-tracker",
+            "main": "src/main.ts",
+            "tsConfig": "src/tsconfig.app.json"
           },
           "configurations": {
             "production": {

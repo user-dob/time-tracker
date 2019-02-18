@@ -1,0 +1,83 @@
+<div class="page">
+    <div *ngIf="isLoading" class="page-loading">
+        <mat-spinner></mat-spinner>
+        <div class="page-reached"></div>
+    </div>
+    <div class="page-controls mat-elevation-z8">
+        <button mat-icon-button class="page-control" (click)="onLoadProjects()">
+            <mat-icon>refresh</mat-icon>
+        </button>
+        <button mat-flat-button class="page-control" (click)="onSave()">Save</button>
+    </div>
+    <div class="page-body">
+        <div class="page-body__nav">
+            <div class="page-body__nav-item mat-elevation-z8">
+                <h6 class="page-body__nav_label">Project types</h6>
+                <mat-radio-group class="radio-group" [(ngModel)]="projectTypeKey" (change)="onFilter()">
+                    <mat-radio-button class="radio-button" [value]="null">
+                        All project types
+                    </mat-radio-button>
+                    <mat-radio-button class="radio-button" *ngFor="let item of types" [value]="item.key">
+                        {{item.formattedKey}}
+                    </mat-radio-button>
+                </mat-radio-group>
+            </div>
+            <div class="page-body__nav-item mat-elevation-z8">
+                <h6 class="page-body__nav_label">Categories</h6>
+                <mat-radio-group class="radio-group" [(ngModel)]="category" (change)="onFilter()">
+                    <mat-radio-button class="radio-button" [value]="null">
+                        All categories
+                    </mat-radio-button>
+                    <mat-radio-button class="radio-button" *ngFor="let item of categories" [value]="item.id">
+                        {{item.name}}
+                    </mat-radio-button>
+                </mat-radio-group>
+            </div>
+        </div>
+        <div class="page-body__content mat-elevation-z8">
+            <mat-form-field>
+                <input matInput (keyup)="onSearch($event.target.value)" placeholder="Search...">
+            </mat-form-field>
+            <mat-table [dataSource]="dataSource" matSort>
+
+                <ng-container matColumnDef="select">
+                    <mat-header-cell *matHeaderCellDef>
+                        <mat-checkbox (change)="$event ? masterToggle() : null"
+                            [checked]="selection.hasValue() && isAllSelected()"
+                            [indeterminate]="selection.hasValue() && !isAllSelected()">
+                        </mat-checkbox>
+                    </mat-header-cell>
+                    <mat-cell *matCellDef="let row">
+                        <mat-checkbox (click)="$event.stopPropagation()"
+                            (change)="$event ? selection.toggle(row) : null" [checked]="selection.isSelected(row)">
+                        </mat-checkbox>
+                    </mat-cell>
+                </ng-container>
+
+                <ng-container matColumnDef="name">
+                    <mat-header-cell *matHeaderCellDef mat-sort-header> Project </mat-header-cell>
+                    <mat-cell *matCellDef="let row">
+                        <img [src]="row.avatarUrls['16x16']" class="project-avatar" />
+                        <span class="project-name">{{row.name}}</span>
+                    </mat-cell>
+                </ng-container>
+
+                <ng-container matColumnDef="key">
+                    <mat-header-cell *matHeaderCellDef mat-sort-header> Key </mat-header-cell>
+                    <mat-cell *matCellDef="let row"> {{row.key}} </mat-cell>
+                </ng-container>
+
+                <ng-container matColumnDef="category">
+                    <mat-header-cell *matHeaderCellDef mat-sort-header> Project category </mat-header-cell>
+                    <mat-cell *matCellDef="let row"> {{row.projectCategory ? row.projectCategory.name : ''}} </mat-cell>
+                </ng-container>
+
+                <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+                <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+
+            </mat-table>
+
+            <mat-paginator [pageSizeOptions]="[10, 25, 100]"></mat-paginator>
+        </div>
+    </div>
+</div>
