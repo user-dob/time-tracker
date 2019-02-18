@@ -5,7 +5,7 @@ import { JiraKeytarService } from './jira.keytar.service';
 
 export interface IJiraUser {
     displayName: string,
-    avatarUrl: string,
+    avatarUrls: {[size: string]: string},
     emailAddress: string
 }
 
@@ -51,14 +51,8 @@ export class JiraLoginService {
         this.password = data.password;
 
         const connector = await this.getConnector();
-        const responce: any = await connector.getUser(this.username);
+        this.user = <IJiraUser>await connector.getUser(this.username);
         
-        this.user = {
-            displayName: responce.displayName,
-            emailAddress: responce.emailAddress,
-            avatarUrl: responce.avatarUrls['16x16']
-        }
-
         await this.jiraKeytarService.setPassword(this.username, this.password);
     }
 

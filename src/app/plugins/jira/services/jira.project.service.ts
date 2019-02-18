@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { LocalStorage } from 'ngx-store';
 import { JiraLoginService } from './jira.login.service';
 
 export interface IJiraProjectCategory {
@@ -19,7 +20,7 @@ export interface IJiraProject {
     id: string,
     key: string,
     name: string,
-    avatarUrl: string,
+    avatarUrls: {[size: string]: string},
     self: string,
     projectCategory: IJiraProjectCategory,
     projectTypeKey: string
@@ -27,6 +28,8 @@ export interface IJiraProject {
 
 @Injectable()
 export class JiraProjectService {
+
+    @LocalStorage() userProjectKeys: string[] = []; 
 
     constructor(
         private jiraLoginService: JiraLoginService
