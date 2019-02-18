@@ -7,6 +7,14 @@ export class NotificationService {
         private snackBar: MatSnackBar
     ) {}
 
+    showSuccess(message: string, duration: number = 5000) {
+        this.snackBar.open(message, null, {
+            panelClass: 'mat-snack-bar-container--success',
+            horizontalPosition: 'left',
+            duration
+        });
+    }
+
     showError(message: string, duration: number = 5000) {
         this.snackBar.open(message, null, {
             panelClass: 'mat-snack-bar-container--error',

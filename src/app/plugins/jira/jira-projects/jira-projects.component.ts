@@ -45,6 +45,7 @@ export class JiraProjectsComponent implements OnInit {
 
     onSave() {
         this.jiraProjectService.userProjectKeys = this.selection.selected.map(item => item.key);
+        this.notificationService.showSuccess('Settings have been saved.');
     }
 
     async onLoadProjects() {
