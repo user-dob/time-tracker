@@ -31,4 +31,12 @@ import { JiraProjectsComponent } from './jira-projects/jira-projects.component';
         JiraProjectsComponent
     ]
 })
-export class JiraModule {}
+export class JiraModule {
+    constructor(
+        private jiraLoginService: JiraLoginService
+    ) {}
+
+    async onInit() {
+        return this.jiraLoginService.onInitAuthenticated();
+    }
+}
