@@ -17,7 +17,7 @@
                     <mat-radio-button class="radio-button" [value]="null">
                         All project types
                     </mat-radio-button>
-                    <mat-radio-button class="radio-button" *ngFor="let item of types" [value]="item.key">
+                    <mat-radio-button class="radio-button" *ngFor="let item of types; trackBy: trackByProjectTypeKey;" [value]="item.key">
                         {{item.formattedKey}}
                     </mat-radio-button>
                 </mat-radio-group>
@@ -28,7 +28,7 @@
                     <mat-radio-button class="radio-button" [value]="null">
                         All categories
                     </mat-radio-button>
-                    <mat-radio-button class="radio-button" *ngFor="let item of categories" [value]="item.id">
+                    <mat-radio-button class="radio-button" *ngFor="let item of categories; trackBy: trackByCategory" [value]="item.id">
                         {{item.name}}
                     </mat-radio-button>
                 </mat-radio-group>
@@ -38,7 +38,7 @@
             <mat-form-field>
                 <input matInput (keyup)="onSearch($event.target.value)" placeholder="Search...">
             </mat-form-field>
-            <mat-table [dataSource]="dataSource" matSort>
+            <mat-table [dataSource]="dataSource" [trackBy]="id" matSort>
 
                 <ng-container matColumnDef="select">
                     <mat-header-cell *matHeaderCellDef>

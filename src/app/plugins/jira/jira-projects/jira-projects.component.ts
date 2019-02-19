@@ -110,4 +110,12 @@ export class JiraProjectsComponent implements OnInit {
             return isType && isCategoty;
         });
     }
+
+    trackByProjectTypeKey(index: number, item: IJiraProjectType) {
+        return item.key;
+    }
+
+    trackByCategory(index: number, item: IJiraProjectCategory) {
+        return item.id;
+    }
 }
