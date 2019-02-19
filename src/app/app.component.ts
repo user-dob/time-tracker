@@ -19,6 +19,6 @@ export class AppComponent implements OnInit {
 			this.jiraService.onInit()
         ]);
 
-        this.router.navigate(['/jira/settings']);
-	}	
+        this.router.navigate(['/github/login']);
+	}
 }

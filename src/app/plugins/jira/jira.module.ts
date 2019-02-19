@@ -9,7 +9,6 @@ import { JiraGuard } from "./jira.guard";
 import { JiraLoginComponent } from './jira-login/jira-login.component';
 import { JiraSettingsComponent } from './jira-settings/jira-settings.component';
 import { JiraProjectsComponent } from './jira-projects/jira-projects.component';
-import { FooterRowOutlet } from '@angular/cdk/table';
 
 @NgModule({
     imports: [

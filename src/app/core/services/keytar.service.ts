@@ -4,7 +4,7 @@ export abstract class KeytarService {
 
     abstract get service(): string;
 
-    async getPassword(account: string) {
+    async getPassword(account: string): Promise<string> {
         return keytar.getPassword(this.service, account);
     }
 

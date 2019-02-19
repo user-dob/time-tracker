@@ -12,16 +12,18 @@ export class JiraLoginService {
         private jiraKeytarService: JiraKeytarService
     ) {}
 
-    @LocalStorage() domain: string;
+    @LocalStorage('jira-domain') domain: string;
 
-    @LocalStorage() username: string;
+    @LocalStorage('jira-username') username: string;
 
     private password: string;
 
-    @LocalStorage() user: IJiraUser;
+    @LocalStorage('jira-user') user: IJiraUser;
 
     async onInitAuthenticated() {
-        this.password = await this.jiraKeytarService.getPassword(this.username);
+    	if (this.username) {
+			this.password = await this.jiraKeytarService.getPassword(this.username);
+		}
     }
 
     isAuthenticated() {

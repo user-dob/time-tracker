@@ -1,9 +1,10 @@
-import { NgModule } from '@angular/core';
+import { NgModule, ModuleWithProviders } from '@angular/core';
 import { HttpClientModule } from '@angular/common/http';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { CoreModule } from '@app/core/core.module';
 import { GithubRoutingModule } from './github-routing.module';
+import { GithubLoginService, GithubConnectorService } from './services';
 import { GithubLoginComponent } from './github-login/github-login.component';
 import { GithubSettingsComponent } from './github-settings/github-settings.component';
 
@@ -20,4 +21,14 @@ import { GithubSettingsComponent } from './github-settings/github-settings.compo
         GithubSettingsComponent
     ]
 })
-export class GithubModule { }
+export class GithubModule {
+	static forRoot(): ModuleWithProviders {
+		return {
+			ngModule: GithubModule,
+			providers: [
+				GithubLoginService,
+				GithubConnectorService
+			]
+		}
+	}
+}
