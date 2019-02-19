@@ -10,8 +10,7 @@ export class JiraGuard implements CanActivate {
     ) {}
 
     async canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot) {
-        const isAuthenticated = await this.jiraLoginService.isAuthenticated();
-        if (isAuthenticated) {
+        if (this.jiraLoginService.isAuthenticated()) {
             return true
         }
         this.router.navigate(['/jira/login']);

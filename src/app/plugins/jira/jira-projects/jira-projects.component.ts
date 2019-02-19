@@ -2,7 +2,8 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatPaginator, MatSort, MatTableDataSource } from '@angular/material';
 import { SelectionModel } from '@angular/cdk/collections';
 import { LoggerService, NotificationService } from '@app/core/services';
-import { JiraProjectService, IJiraProjectType, IJiraProjectCategory, IJiraProject } from '../services';
+import { JiraProjectService } from '../services';
+import { IJiraProjectType, IJiraProjectCategory, IJiraProject } from '../models';
 
 @Component({
     selector: 'app-jira-projects',

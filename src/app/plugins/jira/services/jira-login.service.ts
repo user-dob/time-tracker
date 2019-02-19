@@ -1,13 +1,8 @@
 import { Injectable } from '@angular/core';
 import { LocalStorage } from 'ngx-store';
-import { JiraConnectorService } from './jira.connector.service';
-import { JiraKeytarService } from './jira.keytar.service';
-
-export interface IJiraUser {
-    displayName: string,
-    avatarUrls: {[size: string]: string},
-    emailAddress: string
-}
+import { JiraConnectorService } from './jira-connector.service';
+import { JiraKeytarService } from './jira-keytar.service';
+import { IJiraUser } from '../models';
 
 @Injectable()
 export class JiraLoginService {
@@ -25,22 +20,17 @@ export class JiraLoginService {
 
     @LocalStorage() user: IJiraUser;
 
-    async getPassword() {
-        if (this.username && !this.password) {
-            this.password = await this.jiraKeytarService.getPassword(this.username);
-        }        
-        return this.password;
-    }
-    
-    async isAuthenticated() {
-        const password = await this.getPassword();
-        return Boolean(this.domain) && Boolean(this.username) && Boolean(password);
+    async onInitAuthenticated() {
+        this.password = await this.jiraKeytarService.getPassword(this.username);
     }
 
-    async getConnector() {
-        const password = await this.getPassword();
+    async isAuthenticated() {
+        return Boolean(this.domain) && Boolean(this.username) && Boolean(this.password);
+    }
+
+    getConnector() {
         this.jiraConnectorService.setDomain(this.domain);
-        this.jiraConnectorService.setBasicAuth(this.username, password);
+        this.jiraConnectorService.setBasicAuth(this.username, this.password);
 
         return this.jiraConnectorService;
     }
@@ -50,8 +40,7 @@ export class JiraLoginService {
         this.username = data.username;
         this.password = data.password;
 
-        const connector = await this.getConnector();
-        this.user = <IJiraUser>await connector.getUser(this.username);
+        this.user = await this.getConnector().getUser(this.username);
         
         await this.jiraKeytarService.setPassword(this.username, this.password);
     }
