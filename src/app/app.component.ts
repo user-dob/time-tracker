@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { JiraModule } from '@plugins/jira/jira.module';
+import { JiraService } from '@plugins/jira';
 
 @Component({
 	selector: 'app-root',
@@ -11,15 +11,14 @@ export class AppComponent implements OnInit {
 
 	constructor(
 		private router: Router,
-		private jiraModule: JiraModule
+		private jiraService: JiraService
 	) {}
-
 
 	async ngOnInit() {
 		await Promise.all([
-			this.jiraModule.onInit()
-		]);
+			this.jiraService.onInit()
+        ]);
 
-		this.router.navigate(['/jira/settings']);
+        this.router.navigate(['/jira/settings']);
 	}	
 }

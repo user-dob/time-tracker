@@ -1,14 +1,15 @@
-import { NgModule } from '@angular/core';
+import { NgModule, ModuleWithProviders } from '@angular/core';
 import { HttpClientModule } from '@angular/common/http';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { CoreModule } from '@app/core/core.module';
 import { JiraRoutingModule } from './jira-routing.module';
-import { JiraConnectorService, JiraKeytarService, JiraLoginService, JiraProjectService } from "./services";
+import { JiraConnectorService, JiraKeytarService, JiraLoginService, JiraProjectService, JiraService } from "./services";
 import { JiraGuard } from "./jira.guard";
 import { JiraLoginComponent } from './jira-login/jira-login.component';
 import { JiraSettingsComponent } from './jira-settings/jira-settings.component';
 import { JiraProjectsComponent } from './jira-projects/jira-projects.component';
+import { FooterRowOutlet } from '@angular/cdk/table';
 
 @NgModule({
     imports: [
@@ -18,13 +19,6 @@ import { JiraProjectsComponent } from './jira-projects/jira-projects.component';
         ReactiveFormsModule,
         JiraRoutingModule
     ],
-    providers: [
-        JiraLoginService,
-        JiraConnectorService,
-        JiraKeytarService,
-        JiraProjectService,
-        JiraGuard
-    ],
     declarations: [
         JiraLoginComponent,
         JiraSettingsComponent,
@@ -32,11 +26,17 @@ import { JiraProjectsComponent } from './jira-projects/jira-projects.component';
     ]
 })
 export class JiraModule {
-    constructor(
-        private jiraLoginService: JiraLoginService
-    ) {}
-
-    async onInit() {
-        return this.jiraLoginService.onInitAuthenticated();
+    static forRoot(): ModuleWithProviders {
+        return {
+            ngModule: JiraModule,
+            providers: [
+                JiraLoginService,
+                JiraConnectorService,
+                JiraKeytarService,
+                JiraProjectService,
+                JiraService,
+                JiraGuard
+            ]
+        }
     }
 }

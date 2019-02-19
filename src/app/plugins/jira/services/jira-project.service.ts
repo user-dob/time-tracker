@@ -13,14 +13,14 @@ export class JiraProjectService {
     ) {}
 
     async getProjects() {
-        return await this.jiraLoginService.getConnector().getProjects();
+        return this.jiraLoginService.getConnector().getProjects();
     }
 
     async getTypes() {
-        return await this.jiraLoginService.getConnector().getProjectsTypes();
+        return this.jiraLoginService.getConnector().getProjectsTypes();
     }
 
     async getCategories() {
-        return await this.jiraLoginService.getConnector().getProjectsCategories();
+        return this.jiraLoginService.getConnector().getProjectsCategories();
     }
 }

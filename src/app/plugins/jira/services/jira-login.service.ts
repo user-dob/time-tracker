@@ -24,7 +24,7 @@ export class JiraLoginService {
         this.password = await this.jiraKeytarService.getPassword(this.username);
     }
 
-    async isAuthenticated() {
+    isAuthenticated() {
         return Boolean(this.domain) && Boolean(this.username) && Boolean(this.password);
     }
 
