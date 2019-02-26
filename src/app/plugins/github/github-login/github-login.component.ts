@@ -14,6 +14,8 @@ export class GithubLoginComponent implements OnInit {
 
 	isLoading: boolean = false;
 
+	private _isTwoFactorAuthentication: boolean = false
+
 	form: FormGroup;
 
 	constructor(
@@ -36,16 +38,29 @@ export class GithubLoginComponent implements OnInit {
 		});
 	}
 
+	get isTwoFactorAuthentication(): boolean {
+		return this._isTwoFactorAuthentication;
+	}
+
+	set isTwoFactorAuthentication(value: boolean) {
+		this._isTwoFactorAuthentication = value;
+		this.form.controls['code'].setValidators(value ? [Validators.required] : []);
+	}
+
 	async onSubmit() {
 		if (this.form.valid) {
 			this.isLoading = true;
 
 			try {
 				await this.githubLoginService.login(this.form.value);
-				//this.router.navigate(['/github/settings']);
+				this.router.navigate(['/github/settings']);
 			} catch (error) {
-				this.notificationService.showError(error.message);
-				this.loggerService.logError(error);
+				if (error.isTwoFactorAuthentication) {
+					this.isTwoFactorAuthentication = true;
+				} else {
+					this.notificationService.showError(error.message);
+					this.loggerService.logError(error);
+				}
 			} finally {
 				this.isLoading = false;
 			}

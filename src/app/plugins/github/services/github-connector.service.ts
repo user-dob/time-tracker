@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { IGithubUser } from '../models';
 
 @Injectable()
 export class GithubConnectorService {
@@ -12,11 +13,15 @@ export class GithubConnectorService {
 		private http: HttpClient
 	) {}
 
-	setBasicAuth(username: string, password: string) {
+	setBasicAuth(username: string, password: string, otp?: string) {
 		this.headers = new HttpHeaders({
 			'Content-type': 'application/json',
 			'Authorization': 'Basic ' + window.btoa(`${username}:${password}`)
 		});
+
+		if (otp) {
+			this.headers = this.headers.set('X-GitHub-OTP', otp);
+		}
 	}
 
 	setAccessToken(token: string) {
@@ -35,7 +40,23 @@ export class GithubConnectorService {
 		return this.http.get<T>(`https://${this.domain}/${endPoint}`, { headers: this.headers, params }).toPromise();
 	}
 
-	async getUser(): Promise<any> {
+	async authorizations(params?: any) {
+		return this.http
+			.post<any>(`https://${this.domain}/authorizations`, params,{ headers: this.headers })
+			.toPromise()
+			.catch(response => {
+				if (response.headers.get('X-GitHub-OTP')) {
+					return Promise.reject({isTwoFactorAuthentication: true});
+				}
+				return response;
+			})
+	}
+
+	async revoke(id: string) {
+		return this.http.delete(`https://${this.domain}/authorizations/${id}`, {headers: this.headers}).toPromise();
+	}
+
+	async getUser(): Promise<IGithubUser> {
 		return this.api(`user`);
 	}
 }
