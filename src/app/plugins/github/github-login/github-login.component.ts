@@ -7,8 +7,7 @@ import { GithubLoginService } from '../services';
 
 @Component({
 	selector: 'app-github-login',
-	templateUrl: './github-login.component.html',
-	styleUrls: ['./github-login.component.styl']
+	templateUrl: './github-login.component.html'
 })
 export class GithubLoginComponent implements OnInit {
 

@@ -4,10 +4,11 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { CoreModule } from '@app/core/core.module';
 import { GithubRoutingModule } from './github-routing.module';
-import { GithubLoginService, GithubConnectorService, GithubKeytarService, GithubService } from './services';
+import { GithubLoginService, GithubConnectorService, GithubKeytarService, GithubService, GithubReposService } from './services';
 import { GithubGuard } from './github.guard';
 import { GithubLoginComponent } from './github-login/github-login.component';
 import { GithubSettingsComponent } from './github-settings/github-settings.component';
+import { GithubReposComponent } from './github-repos/github-repos.component';
 
 @NgModule({
     imports: [
@@ -19,7 +20,8 @@ import { GithubSettingsComponent } from './github-settings/github-settings.compo
     ],
     declarations: [
         GithubLoginComponent,
-        GithubSettingsComponent
+        GithubSettingsComponent,
+        GithubReposComponent
     ]
 })
 export class GithubModule {
@@ -27,6 +29,7 @@ export class GithubModule {
 		return {
 			ngModule: GithubModule,
 			providers: [
+				GithubReposService,
 				GithubLoginService,
 				GithubConnectorService,
 				GithubKeytarService,

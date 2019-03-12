@@ -4,6 +4,12 @@ import { GithubConnectorService } from './github-connector.service';
 import { GithubKeytarService } from './github-keytar.service';
 import { IGithubUser } from '../models';
 
+const SCOPES = {
+	scopes: ['user','repo'],
+	note: 'TimeTracker',
+	fingerprint: 'electron-time-tracker'
+};
+
 @Injectable()
 export class GithubLoginService {
 
@@ -35,15 +41,15 @@ export class GithubLoginService {
 
 	async login(data: {username: string, password: string, code?: string}) {
 		this.githubConnectorService.setBasicAuth(data.username, data.password, data.code);
-		const responce: any = await this.githubConnectorService.authorizations({scopes: ['user','repo'], note: 'TimeTracker'});
-		if (responce.token) {
+		const response: any = await this.githubConnectorService.authorizations(SCOPES);
+		if (response.token) {
 			this.username = data.username;
-			this.token = responce.token;
+			this.token = response.token;
 			this.user = await this.getConnector().getUser();
 
 			await this.githubKeytarService.setPassword(this.username, this.token);
 		} else {
-			return Promise.reject(responce);
+			return Promise.reject(response);
 		}
 	}
 

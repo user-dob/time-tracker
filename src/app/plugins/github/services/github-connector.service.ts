@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { IGithubUser } from '../models';
+import { IGithubUser, IGithubRepo } from '../models';
 
 @Injectable()
 export class GithubConnectorService {
@@ -58,5 +58,9 @@ export class GithubConnectorService {
 
 	async getUser(): Promise<IGithubUser> {
 		return this.api(`user`);
+	}
+
+	async getRepos(): Promise<IGithubRepo[]> {
+		return this.api(`user/repos`);
 	}
 }

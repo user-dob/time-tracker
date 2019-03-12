@@ -1,15 +1,14 @@
 import { Component, OnInit } from '@angular/core';
 
 @Component({
-  selector: 'app-github-settings',
-  templateUrl: './github-settings.component.html',
-  styleUrls: ['./github-settings.component.styl']
+	selector: 'app-github-settings',
+	templateUrl: './github-settings.component.html'
 })
 export class GithubSettingsComponent implements OnInit {
 
-  constructor() { }
+	constructor(
+	) {}
 
-  ngOnInit() {
-  }
-
+	ngOnInit() {
+	}
 }
