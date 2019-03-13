@@ -27,6 +27,7 @@
     "@angular/router": "~7.2.0",
     "core-js": "^2.5.4",
     "keytar": "^4.4.0",
+    "ngx-electron": "^2.1.1",
     "ngx-store": "^2.1.0",
     "rxjs": "~6.3.3",
     "tslib": "^1.9.0",

@@ -5,8 +5,7 @@ import { GithubService } from '@plugins/github';
 
 @Component({
 	selector: 'app-root',
-	templateUrl: './app.component.html',
-	styleUrls: ['./app.component.styl']
+	templateUrl: './app.component.html'
 })
 export class AppComponent implements OnInit {
 

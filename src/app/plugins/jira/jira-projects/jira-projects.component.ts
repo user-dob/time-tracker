@@ -7,8 +7,7 @@ import { IJiraProjectType, IJiraProjectCategory, IJiraProject } from '../models'
 
 @Component({
     selector: 'app-jira-projects',
-    templateUrl: './jira-projects.component.html',
-    styleUrls: ['./jira-projects.component.styl']
+    templateUrl: './jira-projects.component.html'
 })
 export class JiraProjectsComponent implements OnInit {
 
@@ -18,7 +17,7 @@ export class JiraProjectsComponent implements OnInit {
 
     dataSource: MatTableDataSource<IJiraProject> = new MatTableDataSource();
 
-    selection = new SelectionModel<IJiraProject>(true, []);
+    selection = new SelectionModel<string>(true, []);
 
     @ViewChild(MatPaginator) paginator: MatPaginator;
 
@@ -32,9 +31,11 @@ export class JiraProjectsComponent implements OnInit {
 
     category: string = null;
 
-    projects: IJiraProject[];
+	projects: IJiraProject[];
 
-    constructor(
+	selectedProjects: IJiraProject[];
+
+	constructor(
         private loggerService: LoggerService,
         private notificationService: NotificationService,
         private jiraProjectService: JiraProjectService
@@ -45,8 +46,8 @@ export class JiraProjectsComponent implements OnInit {
     }
 
     onSave() {
-        this.jiraProjectService.userProjectKeys = this.selection.selected.map(item => item.key);
-        this.notificationService.showSuccess('Settings have been saved.');
+        this.jiraProjectService.selectedProjects = this.projects.filter(item => this.selection.isSelected(item.id));
+        this.notificationService.showSuccess('Projects have been saved.');
     }
 
     async onLoadProjects() {
@@ -66,15 +67,12 @@ export class JiraProjectsComponent implements OnInit {
                 this.jiraProjectService.getProjects()
             ]);
 
-            const userProjectKeysSet = new Set(this.jiraProjectService.userProjectKeys);
-            const selectProjects = projects.filter(item => userProjectKeysSet.has(item.key));
-
             this.types = types;
             this.categories = categories;
             this.projects = projects;
 
             this.dataSource.data = this.projects;
-            this.selection.select(...selectProjects);
+            this.selection.select(...this.jiraProjectService.selectedProjects.map(item => item.id));
 
         } catch (error) {
             this.notificationService.showError(error.message);
@@ -97,18 +95,18 @@ export class JiraProjectsComponent implements OnInit {
         return numSelected === numRows;
     }
 
-    masterToggle() {
-        this.isAllSelected() ?
-            this.selection.clear() :
-            this.dataSource.data.forEach(row => this.selection.select(row));
+    onMasterToggle() {
+        this.isAllSelected()
+			? this.selection.clear()
+			: this.dataSource.data.forEach(row => this.selection.select(row.id));
     }
 
     onFilter() {
         this.dataSource.data = this.projects.filter(item => {
             const isType = !this.projectTypeKey || item.projectTypeKey === this.projectTypeKey;
-            const isCategoty = !this.category || item.projectCategory && item.projectCategory.id === this.category; 
+            const isCategory = !this.category || item.projectCategory && item.projectCategory.id === this.category;
 
-            return isType && isCategoty;
+            return isType && isCategory;
         });
     }
 

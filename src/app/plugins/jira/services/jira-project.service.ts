@@ -1,11 +1,13 @@
 import { Injectable } from '@angular/core';
 import { LocalStorage } from 'ngx-store';
 import { JiraLoginService } from './jira-login.service';
+import { IJiraProject } from '../models';
 
 @Injectable()
 export class JiraProjectService {
 
-    @LocalStorage('jira-user-project-keys') userProjectKeys: string[] = [];
+    @LocalStorage('JiraProjectService.selectedProjects')
+	selectedProjects: IJiraProject[] = [];
 
     constructor(
         private jiraLoginService: JiraLoginService

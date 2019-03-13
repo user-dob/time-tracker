@@ -6,18 +6,19 @@ import { IGithubUser } from '../models';
 
 const SCOPES = {
 	scopes: ['user','repo'],
-	note: 'TimeTracker',
-	fingerprint: 'electron-time-tracker'
+	note: 'TimeTracker'
 };
 
 @Injectable()
 export class GithubLoginService {
 
-	@LocalStorage('github-username') username: string;
+	@LocalStorage('GithubLoginService.username')
+	username: string;
 
 	private token: string;
 
-	@LocalStorage('github-user') user: IGithubUser;
+	@LocalStorage('GithubLoginService.user')
+	user: IGithubUser;
 
 	constructor(
 		private githubConnectorService: GithubConnectorService,

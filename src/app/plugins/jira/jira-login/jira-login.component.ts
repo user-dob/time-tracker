@@ -7,8 +7,7 @@ import { JiraLoginService } from '../services';
 
 @Component({
     selector: 'app-jira-login',
-    templateUrl: './jira-login.component.html',
-    styleUrls: ['./jira-login.component.styl']
+    templateUrl: './jira-login.component.html'
 })
 export class JiraLoginComponent implements OnInit {
 

@@ -17,7 +17,8 @@
                     <mat-radio-button class="radio-button" [value]="null">
                         All project types
                     </mat-radio-button>
-                    <mat-radio-button class="radio-button" *ngFor="let item of types; trackBy: trackByProjectTypeKey;" [value]="item.key">
+                    <mat-radio-button class="radio-button" *ngFor="let item of types; trackBy: trackByProjectTypeKey;"
+                                      [value]="item.key">
                         {{item.formattedKey}}
                     </mat-radio-button>
                 </mat-radio-group>
@@ -28,7 +29,8 @@
                     <mat-radio-button class="radio-button" [value]="null">
                         All categories
                     </mat-radio-button>
-                    <mat-radio-button class="radio-button" *ngFor="let item of categories; trackBy: trackByCategory" [value]="item.id">
+                    <mat-radio-button class="radio-button" *ngFor="let item of categories; trackBy: trackByCategory"
+                                      [value]="item.id">
                         {{item.name}}
                     </mat-radio-button>
                 </mat-radio-group>
@@ -42,34 +44,34 @@
 
                 <ng-container matColumnDef="select">
                     <mat-header-cell *matHeaderCellDef>
-                        <mat-checkbox (change)="$event ? masterToggle() : null"
-                            [checked]="selection.hasValue() && isAllSelected()"
-                            [indeterminate]="selection.hasValue() && !isAllSelected()">
+                        <mat-checkbox (change)="onMasterToggle()"
+                                      [checked]="selection.hasValue() && isAllSelected()"
+                                      [indeterminate]="selection.hasValue() && !isAllSelected()">
                         </mat-checkbox>
                     </mat-header-cell>
                     <mat-cell *matCellDef="let row">
                         <mat-checkbox (click)="$event.stopPropagation()"
-                            (change)="$event ? selection.toggle(row) : null" [checked]="selection.isSelected(row)">
+                                      (change)="selection.toggle(row.id)" [checked]="selection.isSelected(row.id)">
                         </mat-checkbox>
                     </mat-cell>
                 </ng-container>
 
                 <ng-container matColumnDef="name">
-                    <mat-header-cell *matHeaderCellDef mat-sort-header> Project </mat-header-cell>
+                    <mat-header-cell *matHeaderCellDef mat-sort-header> Project</mat-header-cell>
                     <mat-cell *matCellDef="let row">
-                        <img [src]="row.avatarUrls['16x16']" class="project-avatar" />
+                        <img [src]="row.avatarUrls['16x16']" class="project-avatar"/>
                         <span class="project-name">{{row.name}}</span>
                     </mat-cell>
                 </ng-container>
 
                 <ng-container matColumnDef="key">
-                    <mat-header-cell *matHeaderCellDef mat-sort-header> Key </mat-header-cell>
-                    <mat-cell *matCellDef="let row"> {{row.key}} </mat-cell>
+                    <mat-header-cell *matHeaderCellDef mat-sort-header> Key</mat-header-cell>
+                    <mat-cell *matCellDef="let row"> {{row.key}}</mat-cell>
                 </ng-container>
 
                 <ng-container matColumnDef="category">
-                    <mat-header-cell *matHeaderCellDef mat-sort-header> Project category </mat-header-cell>
-                    <mat-cell *matCellDef="let row"> {{row.projectCategory ? row.projectCategory.name : ''}} </mat-cell>
+                    <mat-header-cell *matHeaderCellDef mat-sort-header> Project category</mat-header-cell>
+                    <mat-cell *matCellDef="let row"> {{row.projectCategory ? row.projectCategory.name : ''}}</mat-cell>
                 </ng-container>
 
                 <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>

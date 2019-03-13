@@ -18,28 +18,30 @@
 
                 <ng-container matColumnDef="select">
                     <mat-header-cell *matHeaderCellDef>
-                        <mat-checkbox (change)="$event ? onMasterToggle() : null"
+                        <mat-checkbox (change)="onMasterToggle()"
                                       [checked]="selection.hasValue() && isAllSelected()"
                                       [indeterminate]="selection.hasValue() && !isAllSelected()">
                         </mat-checkbox>
                     </mat-header-cell>
                     <mat-cell *matCellDef="let row">
                         <mat-checkbox (click)="$event.stopPropagation()"
-                                      (change)="$event ? selection.toggle(row.id) : null" [checked]="selection.isSelected(row.id)">
+                                      (change)="selection.toggle(row.id)"
+                                      [checked]="selection.isSelected(row.id)">
                         </mat-checkbox>
                     </mat-cell>
                 </ng-container>
 
                 <ng-container matColumnDef="name">
-                    <mat-header-cell *matHeaderCellDef mat-sort-header> Name </mat-header-cell>
-                    <mat-cell *matCellDef="let row"> <a target="_blank" [href]="row.name">{{row.name}}</a> </mat-cell>
+                    <mat-header-cell *matHeaderCellDef mat-sort-header> Name</mat-header-cell>
+                    <mat-cell *matCellDef="let row"><a target="_blank" [uiHref]="row.html_url">{{row.name}}</a></mat-cell>
                 </ng-container>
 
                 <ng-container matColumnDef="owner">
-                    <mat-header-cell *matHeaderCellDef mat-sort-header> Owner </mat-header-cell>
+                    <mat-header-cell *matHeaderCellDef mat-sort-header> Owner</mat-header-cell>
                     <mat-cell *matCellDef="let row">
-                        <img [src]="row.owner.avatar_url" class="repo-avatar" />
-                        <span class="repo-name"><a target="_blank" [href]="row.owner.html_url">{{row.owner.login}}</a></span>
+                        <img [src]="row.owner.avatar_url" class="repo-avatar"/>
+                        <span class="repo-name"><a target="_blank"
+                                                   [uiHref]="row.owner.html_url">{{row.owner.login}}</a></span>
                     </mat-cell>
                 </ng-container>
 
